@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import NoteList from '../../components/NoteList';
 import AddNoteModal from '../../components/AddNoteModal';
+import noteSerive from './../../services/noteService.js';
 
 const NoteScreen = () => {
   const [notes, setNotes] = useState([]);
@@ -18,6 +19,30 @@ const NoteScreen = () => {
     setModalVisible(false);
   }
 
+  async function fetchNotes() {
+    setLoading(true);
+
+    try {
+      const response = await noteSerive.getNotes();
+
+      if (response.error) {
+        setError(response.error);
+
+        Alert.alert('Error', response.error);
+      } else {
+        setNotes(response.data);
+        setError(null);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
   ///////////////////////////////////////////////////
   return (
     <View className="flex-1">

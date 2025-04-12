@@ -11,10 +11,17 @@ const NoteScreen = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  function addNote() {
+  async function addNote() {
     if (newNote.trim() === '') return;
 
-    setNotes((ps) => [...ps, { id: Date.now().toString(), text: newNote }]);
+    const response = await noteSerive.addNote(newNote);
+
+    if (response.error) {
+      Alert.alert('Error', response.error);
+    } else {
+      setNotes([...notes, response.data]);
+    }
+
     setNewNote('');
     setModalVisible(false);
   }

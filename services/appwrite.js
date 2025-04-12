@@ -5,6 +5,8 @@ const config = {
   endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
   projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
   db: process.env.EXPO_PUBLIC_APPWRITE_DB_ID,
+  android: process.env.EXPO_PUBLIC_APPWRITE_PACKAGE_NAME,
+  ios: process.env.EXPO_PUBLIC_APPWRITE_BUNDLE_ID,
   col: {
     notes: process.env.EXPO_PUBLIC_APPWRITE_COL_NOTES_ID,
   },
@@ -16,10 +18,10 @@ const client = new Client()
 
 switch (Platform.OS) {
   case 'ios':
-    client.setPlatform(config.endpoint);
+    client.setPlatform(config.ios);
     break;
   case 'android':
-    client.setPlatform(config.projectId);
+    client.setPlatform(config.android);
     break;
 }
 

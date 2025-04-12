@@ -6,8 +6,8 @@ const NoteList = ({ notes }) => {
   return (
     <FlatList
       data={notes}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item, index }) => {
+      keyExtractor={(item) => item.$id}
+      renderItem={({ item }) => {
         return <NoteItem note={item} />;
       }}
     />
